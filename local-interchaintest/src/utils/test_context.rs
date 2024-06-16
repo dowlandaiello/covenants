@@ -27,6 +27,24 @@ pub struct TestContext {
     ibc_denoms: HashMap<(String, String), String>,
 }
 
+impl TestContext {
+    pub fn new(
+        chains: HashMap<String, LocalChain>,
+        transfer_channel_ids: HashMap<(String, String), String>,
+        ccv_channel_ids: HashMap<(String, String), String>,
+        connection_ids: HashMap<(String, String), String>,
+        ibc_denoms: HashMap<(String, String), String>,
+    ) -> Self {
+        Self {
+            chains,
+            transfer_channel_ids,
+            ccv_channel_ids,
+            connection_ids,
+            ibc_denoms,
+        }
+    }
+}
+
 impl From<ChainsVec> for TestContext {
     fn from(chains: ChainsVec) -> Self {
         let mut chains_map = HashMap::new();
