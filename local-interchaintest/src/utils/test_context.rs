@@ -191,6 +191,8 @@ pub struct LocalChain {
     pub rb: ChainRequestBuilder,
     /// contract codes stored on this chain (filename -> code_id)
     pub contract_codes: HashMap<String, u64>,
+    /// addresses of deployed contracts (filename -> address)
+    pub contract_addrs: HashMap<String, String>,
     /// outgoing channel ids
     pub channels: Vec<Channel>,
     /// outgoing connection ids available (dest_chain_id -> connection_id)
@@ -209,6 +211,7 @@ impl LocalChain {
         Self {
             rb,
             contract_codes: Default::default(),
+            contract_addrs: Default::default(),
             channels,
             connection_ids: Default::default(),
             admin_addr,
@@ -223,6 +226,11 @@ impl LocalChain {
     pub fn save_code(&mut self, abs_path: PathBuf, code: u64) {
         let id = abs_path.file_stem().unwrap().to_str().unwrap();
         self.contract_codes.insert(id.to_string(), code);
+    }
+
+    pub fn save_addr(&mut self, abs_path: PathBuf, addr: String) {
+        let id = abs_path.file_stem().unwrap().to_str().unwrap();
+        self.contract_addrs.insert(id.to_string(), addr);
     }
 }
 
